@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GMB SEO Case Study — Angel Arias</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0f0d;
+    --surface: #1a1a17;
+    --surface2: #242420;
+    --accent: #c8f060;
+    --accent2: #60d4f0;
+    --text: #f0ede6;
+    --muted: #888880;
+    --danger: #f06060;
+    --warning: #f0b860;
+    --ok: #60f0a0;
+    --border: rgba(240,237,230,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    padding: 1rem 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(15,15,13,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+  }
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a {
+    font-size: 13px; color: var(--muted); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 8rem 2rem 4rem;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 100%, black 30%, transparent 100%);
+  }
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.2s forwards;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 400;
+    line-height: 1.1;
+    max-width: 800px;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.4s forwards;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-meta {
+    margin-top: 2rem;
+    display: flex; gap: 2rem; flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.6s forwards;
+  }
+  .hero-meta-item { font-size: 13px; color: var(--muted); }
+  .hero-meta-item span { color: var(--text); display: block; font-size: 15px; }
+
+  /* SECTIONS */
+  section { padding: 5rem 2rem; border-bottom: 1px solid var(--border); }
+  .container { max-width: 900px; margin: 0 auto; }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  p { color: rgba(240,237,230,0.75); margin-bottom: 1rem; }
+
+  /* SCORE CARDS */
+  .score-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 2.5rem 0;
+  }
+  .score-card {
+    background: var(--surface);
+    padding: 1.5rem;
+    transition: background 0.2s;
+  }
+  .score-card:hover { background: var(--surface2); }
+  .score-card-label {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .score-card-value {
+    font-size: 2.2rem;
+    font-family: 'DM Serif Display', serif;
+    font-weight: 400;
+    line-height: 1;
+  }
+  .score-card-value.red { color: var(--danger); }
+  .score-card-value.green { color: var(--ok); }
+  .score-card-value.yellow { color: var(--warning); }
+
+  /* CATEGORY BARS */
+  .bar-list { margin: 2rem 0; }
+  .bar-item { margin-bottom: 1.25rem; }
+  .bar-header {
+    display: flex; justify-content: space-between;
+    font-size: 13px; margin-bottom: 6px;
+  }
+  .bar-label { color: var(--text); }
+  .bar-score { font-family: 'DM Mono', monospace; font-size: 12px; }
+  .bar-track {
+    height: 4px;
+    background: var(--surface2);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    width: 0;
+    transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* ISSUE TABLE */
+  .issue-list { margin: 2rem 0; }
+  .issue-item {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 0.9rem 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 6px;
+    background: var(--surface);
+    transition: background 0.2s;
+  }
+  .issue-item:hover { background: var(--surface2); }
+  .issue-badge {
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  .badge-critical { background: rgba(240,96,96,0.15); color: var(--danger); }
+  .badge-warning { background: rgba(240,184,96,0.15); color: var(--warning); }
+  .badge-ok { background: rgba(96,240,160,0.15); color: var(--ok); }
+  .issue-text { flex: 1; font-size: 14px; color: rgba(240,237,230,0.85); }
+  .issue-impact { font-size: 11px; color: var(--muted); font-family: 'DM Mono', monospace; }
+
+  /* PHASE TIMELINE */
+  .phase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+  .phase-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    background: var(--surface);
+    position: relative;
+    overflow: hidden;
+  }
+  .phase-card.active { border-color: rgba(200,240,96,0.4); }
+  .phase-card.active::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--accent);
+  }
+  .phase-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+  .phase-title {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+  .phase-status {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+  }
+  .status-active { color: var(--accent); }
+  .status-pending { color: var(--muted); }
+
+  /* FOOTER */
+  footer {
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+  footer p { font-size: 13px; color: var(--muted); }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  /* KEYWORD SECTION PLACEHOLDER */
+  .coming-soon {
+    border: 1px dashed var(--border);
+    border-radius: 12px;
+    padding: 3rem;
+    text-align: center;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    margin: 2rem 0;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">arimig / gmb-seo-portfolio</div>
+  <div class="nav-links">
+    <a href="#audit">Phase 1</a>
+    <a href="#keywords">Phase 2</a>
+    <a href="#content">Phase 3</a>
+    <a href="#results">Results</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="container">
+    <div class="hero-tag">Live SEO Case Study · 2026</div>
+    <h1>Rebuilding organic search for <em>Guidance Medical Billing</em></h1>
+    <div class="hero-meta">
+      <div class="hero-meta-item">Client <span>guidancemedicalbilling.com</span></div>
+      <div class="hero-meta-item">Market <span>Central Florida</span></div>
+      <div class="hero-meta-item">Industry <span>Medical Billing & Credentialing</span></div>
+      <div class="hero-meta-item">Started <span>April 2026</span></div>
+    </div>
+  </div>
+</div>
+
+<section id="audit">
+  <div class="container">
+    <div class="section-label">Phase 1 — Technical Audit</div>
+    <h2>Starting point: a site with strong bones and zero SEO signals</h2>
+    <p>Guidance Medical Billing has operated for 13+ years serving healthcare providers across Central Florida. Despite deep domain expertise and a loyal client base, the website was leaving significant organic search opportunity on the table. Here's what the audit uncovered.</p>
+
+    <div class="score-grid">
+      <div class="score-card">
+        <div class="score-card-label">Overall SEO score</div>
+        <div class="score-card-value red">28<span style="font-size:1.2rem">/100</span></div>
+      </div>
+      <div class="score-card">
+        <div class="score-card-label">Pages indexed</div>
+        <div class="score-card-value red">4</div>
+      </div>
+      <div class="score-card">
+        <div class="score-card-label">Critical issues</div>
+        <div class="score-card-value red">6</div>
+      </div>
+      <div class="score-card">
+        <div class="score-card-label">Quick wins available</div>
+        <div class="score-card-value green">6</div>
+      </div>
+    </div>
+
+    <div class="bar-list" id="bars"></div>
+
+    <h2 style="font-size:1.6rem; margin-top:3rem;">Issue log</h2>
+    <div class="issue-list" id="issues"></div>
+  </div>
+</section>
+
+<section id="keywords">
+  <div class="container">
+    <div class="section-label">Phase 2 — Keyword Research</div>
+    <h2>Finding the exact terms Central Florida practices search for</h2>
+    <p>Mapping high-intent, low-competition keywords across medical billing, credentialing, and revenue cycle management — filtered for the Orlando metro and surrounding counties.</p>
+    <div class="coming-soon">[ In progress — check back soon ]</div>
+  </div>
+</section>
+
+<section id="content">
+  <div class="container">
+    <div class="section-label">Phase 3 — Content Strategy</div>
+    <h2>Building topical authority page by page</h2>
+    <p>New service pages, location pages, and a resource blog designed to own the medical billing conversation in Central Florida.</p>
+    <div class="coming-soon">[ Coming after Phase 2 ]</div>
+  </div>
+</section>
+
+<section id="results">
+  <div class="container">
+    <div class="section-label">Results</div>
+    <h2>Tracking progress over time</h2>
+    <p>Ranking improvements, traffic growth, and lead generation results will be documented here as the project progresses.</p>
+    <div class="coming-soon">[ Baseline being established ]</div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-label">Project roadmap</div>
+    <h2>Four phases, one goal</h2>
+    <div class="phase-grid">
+      <div class="phase-card active">
+        <div class="phase-number">01</div>
+        <div class="phase-title">Technical Audit</div>
+        <div class="phase-status status-active">● In progress</div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-number">02</div>
+        <div class="phase-title">Keyword Research</div>
+        <div class="phase-status status-pending">○ Upcoming</div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-number">03</div>
+        <div class="phase-title">Content Strategy</div>
+        <div class="phase-status status-pending">○ Upcoming</div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-number">04</div>
+        <div class="phase-title">On-Page Optimization</div>
+        <div class="phase-status status-pending">○ Upcoming</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Built by <a href="https://github.com/arimig">Angel Arias</a> · Live SEO case study for Guidance Medical Billing · Updated April 2026</p>
+</footer>
+
+<script>
+const categories = [
+  { label: "On-page optimization", score: 15, color: "#f06060" },
+  { label: "Content depth", score: 10, color: "#f06060" },
+  { label: "Local SEO signals", score: 20, color: "#f06060" },
+  { label: "Technical SEO", score: 45, color: "#f0b860" },
+  { label: "Backlink profile", score: 30, color: "#f06060" },
+  { label: "Site structure", score: 25, color: "#f06060" },
+];
+
+const issues = [
+  { severity: "critical", text: "Missing meta titles on all 4 pages", impact: "High" },
+  { severity: "critical", text: "Missing meta descriptions on all 4 pages", impact: "High" },
+  { severity: "critical", text: "No H1 tags or weak heading hierarchy", impact: "High" },
+  { severity: "critical", text: "Thin content — most pages under 200 words", impact: "High" },
+  { severity: "critical", text: "No blog or resource section", impact: "High" },
+  { severity: "critical", text: "Credentialing not a standalone service page", impact: "High" },
+  { severity: "warning", text: "No Google Business Profile optimization signals", impact: "Medium" },
+  { severity: "warning", text: "No schema markup (LocalBusiness, Service)", impact: "Medium" },
+  { severity: "warning", text: "No internal linking between pages", impact: "Medium" },
+  { severity: "ok", text: "Site appears mobile-responsive", impact: "Low" },
+  { severity: "ok", text: "HTTPS active", impact: "Low" },
+  { severity: "ok", text: "Contact page exists", impact: "Low" },
+];
+
+const barsEl = document.getElementById('bars');
+categories.forEach(c => {
+  barsEl.innerHTML += `<div class="bar-item">
+    <div class="bar-header">
+      <span class="bar-label">${c.label}</span>
+      <span class="bar-score" style="color:${c.color}">${c.score}/100</span>
+    </div>
+    <div class="bar-track">
+      <div class="bar-fill" data-width="${c.score}" style="background:${c.color}"></div>
+    </div>
+  </div>`;
+});
+
+const issuesEl = document.getElementById('issues');
+const badgeMap = { critical: 'badge-critical', warning: 'badge-warning', ok: 'badge-ok' };
+const labelMap = { critical: 'Critical', warning: 'Warning', ok: 'Passing' };
+issues.forEach(i => {
+  issuesEl.innerHTML += `<div class="issue-item">
+    <span class="issue-badge ${badgeMap[i.severity]}">${labelMap[i.severity]}</span>
+    <span class="issue-text">${i.text}</span>
+    <span class="issue-impact">${i.impact}</span>
+  </div>`;
+});
+
+// Animate bars on scroll
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      document.querySelectorAll('.bar-fill').forEach(bar => {
+        bar.style.width = bar.dataset.width + '%';
+      });
+      observer.disconnect();
+    }
+  });
+}, { threshold: 0.3 });
+const barsSection = document.getElementById('bars');
+if (barsSection) observer.observe(barsSection);
+</script>
+</body>
+</html>
